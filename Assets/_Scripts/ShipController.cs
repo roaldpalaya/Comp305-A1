@@ -10,8 +10,8 @@ public class ShipController : MonoBehaviour {
     private Transform _trfrm;
 
     public Transform _laser;
-    public float _laserDistance = 3.0f;
-    public float _fireDelay = 0.3f;
+    public float _laserDistance = 15.0f;
+    public float _fireDelay = 1.0f;
     public float _nextShot = 0.0f;
 
     public List<KeyCode> shootBtn;
