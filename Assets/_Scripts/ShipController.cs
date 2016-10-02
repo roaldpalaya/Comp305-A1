@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class ShipController : MonoBehaviour {
 
@@ -7,6 +9,12 @@ public class ShipController : MonoBehaviour {
     private float _shipSpd = 50.0f;
     private Transform _trfrm;
 
+    public Transform _laser;
+    public float _laserDistance = 3.0f;
+    public float _fireDelay = 0.3f;
+    public float _nextShot = 0.0f;
+
+    public List<KeyCode> shootBtn;
     public float ShpSpeed
     {
         get
@@ -33,7 +41,18 @@ public class ShipController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         _movement();
-	}
+
+        foreach (KeyCode element in shootBtn)
+        {
+            if (Input.GetKey(element) && _nextShot < 0)
+            {
+                _nextShot = _fireDelay;
+                _Shoot();
+                break;
+            }
+        }
+        _nextShot -= Time.deltaTime;
+    }
 
     //Where the horizontal movement is done
     private void _movement()
@@ -54,5 +73,18 @@ public class ShipController : MonoBehaviour {
         _pos.x=Mathf.Clamp(this._trfrm.position.x, -270, 265);
         this._trfrm.position = _pos;
         
+    }
+
+    void _Shoot()
+    {
+
+        Vector2 _laserPos = this._trfrm.position;
+        float rotationAngle = _trfrm.localEulerAngles.z - 90;
+        _laserPos.x += (Mathf.Cos((rotationAngle) *
+               Mathf.Deg2Rad) * -_laserDistance);
+        _laserPos.y += (Mathf.Sin((rotationAngle) *
+                     Mathf.Deg2Rad) * -_laserDistance);
+
+        Instantiate(_laser, _laserPos, this._trfrm.rotation);
     }
 }

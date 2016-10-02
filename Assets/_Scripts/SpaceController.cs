@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+    
 
 public class SpaceController : MonoBehaviour {
     private int _spd = 3;
+    
     private Transform _trfrm;
 
+    
     public int Spd {
         get {
             return this._spd;
@@ -26,6 +29,8 @@ public class SpaceController : MonoBehaviour {
 	void Update () {
         this._movement();
         this._boundChk();
+
+       
 	}
 
     //moves the background
@@ -45,6 +50,8 @@ public class SpaceController : MonoBehaviour {
         }
 
     }
+
+    
     //resets the background to starting point to scroll again
     private void _reset()
     {
