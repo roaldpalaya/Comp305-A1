@@ -6,15 +6,16 @@ using System.Collections.Generic;
 public class ShipController : MonoBehaviour {
 
     
-    private float _shipSpd = 50.0f;
+    private float _shipSpd = 100.0f;
     private Transform _trfrm;
 
     public Transform _laser;
     public float _laserDistance = 15.0f;
-    public float _fireDelay = 1.0f;
+    public float _fireDelay = 0.5f;
     public float _nextShot = 0.0f;
 
     public List<KeyCode> shootBtn;
+    
     public float ShpSpeed
     {
         get
@@ -26,16 +27,16 @@ public class ShipController : MonoBehaviour {
             this._shipSpd = value;
         }
     }
-
+    
     // Current speed of the player
-    private float curSpeed = 0.0f;
+    public float curSpeed = 0.0f;
 
     // The last movement done
-    private Vector3 lastMovement = new Vector3();
+    //private Vector3 lastMovement = new Vector3();
     // Use this for initialization
     void Start () {
         this._trfrm = this.GetComponent<Transform>();
-        this._shipSpd = 50.0f;
+        this._shipSpd = 100.0f;
     }
 	
 	// Update is called once per frame
@@ -55,7 +56,7 @@ public class ShipController : MonoBehaviour {
     }
 
     //Where the horizontal movement is done
-    private void _movement()
+    private  void _movement()
     {
         Vector2 _move = new Vector2();
         _move.x += Input.GetAxis("Horizontal");
@@ -66,11 +67,11 @@ public class ShipController : MonoBehaviour {
         {
             curSpeed = _shipSpd;
             this.transform.Translate(_move * Time.deltaTime * _shipSpd, Space.World);
-            lastMovement = _move;
+            //lastMovement = _move;
         }
         
         Vector2 _pos = _trfrm.position;
-        _pos.x=Mathf.Clamp(this._trfrm.position.x, -270, 265);
+        _pos.x=Mathf.Clamp(this._trfrm.position.x, -270, 270);
         this._trfrm.position = _pos;
         
     }

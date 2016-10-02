@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\_Scripts\LaserController.cs" />
+    <Compile Include="Assets\_Scripts\MeteorController.cs" />
     <Compile Include="Assets\_Scripts\ShipController.cs" />
     <Compile Include="Assets\_Scripts\SpaceController.cs" />
   </ItemGroup>

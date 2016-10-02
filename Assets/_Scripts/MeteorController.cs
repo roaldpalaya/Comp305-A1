@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
-    
 
-public class SpaceController : MonoBehaviour {
-    private int _spd = 2;
-    
+public class MeteorController : MonoBehaviour {
+    private int _spd = 4;
+
     private Transform _trfrm;
 
-    
-    public int Spd {
-        get {
+
+    public int Spd
+    {
+        get
+        {
             return this._spd;
         }
 
@@ -17,21 +18,23 @@ public class SpaceController : MonoBehaviour {
         {
             this._spd = value;
         }
-            
+
     }
-     // Use this for initialization
-    void Start () {
+    // Use this for initialization
+    void Start()
+    {
         this._trfrm = this.GetComponent<Transform>();
-        this._spd = 2;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        this._spd = 4;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         this._movement();
         this._boundChk();
 
-       
-	}
+
+    }
 
     //moves the background
     private void _movement()
@@ -44,18 +47,18 @@ public class SpaceController : MonoBehaviour {
     //Check if background is almost out of bounds
     private void _boundChk()
     {
-        if(this._trfrm.position.y <= -266f)
+        if (this._trfrm.position.y <= -255f)
         {
             this._reset();
         }
 
     }
 
-    
+
     //resets the background to starting point to scroll again
     private void _reset()
     {
-        this._trfrm.position = new Vector2(0f, 266f);
+        this._trfrm.position = new Vector2(Random.Range(-270,270), 280);
 
     }
 }
