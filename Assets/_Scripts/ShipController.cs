@@ -17,6 +17,8 @@ public class ShipController : MonoBehaviour {
     public float _fireDelay = 0.5f;
     public float _nextShot = 0.0f;
 
+    public GameController gctrl;
+
     public List<KeyCode> shootBtn;
 
     public AudioSource Explosion3;
@@ -108,15 +110,19 @@ public class ShipController : MonoBehaviour {
             
             if (crash.gameObject.tag.Contains("Meteor"))
             {
+            Debug.Log("Ship hit by meteor");
                 MeteorController _meteor = crash.gameObject.GetComponent("MeteorController") as MeteorController;
                 _health -= _meteor._dmg;
                 this.Explosion3.Play();
-                
+                this.gctrl.Lives -= 1;
+            Debug.Log("Ship hit");
+
                 
             }
             if (crash.gameObject.tag.Contains("Star"))
         {
             this.Powerup.Play();
+            this.gctrl.Lives += 1;
         }
             if (_health <= 0)
             {

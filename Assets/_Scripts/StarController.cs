@@ -59,18 +59,18 @@ public class StarController : MonoBehaviour {
     //resets the background to starting point to scroll again
     private void _reset()
     {
-        this._spd = Random.Range(4, 10);
+        this._spd = Random.Range(4, 6);
         this._trfrm.position = new Vector2(Random.Range(-270, 270), 280);
         
 
     }
    public void OnTriggerEnter2D(Collider2D power)
     {
-        Debug.Log("hit by" + power.gameObject.tag);
+        Debug.Log("Star hit by" + power.gameObject.tag);
 
         if (power.gameObject.tag.Contains("Ship"))
         {
-            ShipController _ship = power.gameObject.GetComponent("ShipController") as ShipController;
+            //ShipController _ship = power.gameObject.GetComponent("ShipController") as ShipController;
             _health -= 1;
             
 

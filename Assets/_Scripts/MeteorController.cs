@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class MeteorController : MonoBehaviour {
-    private int _spd = 4;
+    private int _spd;
     public int _dmg = 1;
     private Transform _trfrm;
     public Transform explosion;
@@ -10,7 +10,9 @@ public class MeteorController : MonoBehaviour {
     public MeteorController _meteor1;
     public MeteorController _meteor2;
     public MeteorController _meteor3;
-    bool chkDead = false;
+
+    public GameController gctrl;
+    //bool chkDead = false;
     public AudioSource Explosion3;
     public int Spd
     {
@@ -63,14 +65,14 @@ public class MeteorController : MonoBehaviour {
     //resets the background to starting point to scroll again
     private void _reset()
     {
-        this._spd = 5;
+        this._spd = 7;
         this._trfrm.position = new Vector2(Random.Range(-270,270), 280);
 
     }
 
     public void OnTriggerEnter2D(Collider2D attack)
     {
-        Debug.Log("hit by" + attack.gameObject.tag);
+        Debug.Log("Meteor hit by" + attack.gameObject.tag);
 
         if (attack.gameObject.tag.Contains("Weapon") )
         {
@@ -82,13 +84,14 @@ public class MeteorController : MonoBehaviour {
         if (_healthEnemy <= 0)
         {
             this.Explosion3.Play();
+            this.gctrl.Score += 50;
             if (explosion) {
                 Debug.Log("exploding");
                 GameObject explode = ((Transform)Instantiate(explosion, this._trfrm.position, this._trfrm.rotation)).gameObject;
                 explode.GetComponent<Renderer>().sortingLayerName = "Meteor";
                 Destroy(explode, 2.0f);
                 Debug.Log("exploded");
-          //     RespawnMeteor();
+          
             }
             _reset();
 
