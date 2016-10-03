@@ -8,14 +8,20 @@ public class ShipController : MonoBehaviour {
     
     private float _shipSpd = 100.0f;
     private Transform _trfrm;
-
+    public int _health=1;
     public Transform _laser;
+    public Transform explosion;
+
+
     public float _laserDistance = 15.0f;
     public float _fireDelay = 0.5f;
     public float _nextShot = 0.0f;
 
     public List<KeyCode> shootBtn;
-    
+
+    public AudioSource Explosion3;
+    public AudioSource Powerup;
+    public AudioSource Laser_Shoot;
     public float ShpSpeed
     {
         get
@@ -35,8 +41,7 @@ public class ShipController : MonoBehaviour {
     //private Vector3 lastMovement = new Vector3();
     // Use this for initialization
     void Start () {
-        this._trfrm = this.GetComponent<Transform>();
-        this._shipSpd = 100.0f;
+        _reset();
     }
 	
 	// Update is called once per frame
@@ -54,7 +59,14 @@ public class ShipController : MonoBehaviour {
         }
         _nextShot -= Time.deltaTime;
     }
+    void _reset()
+    {
+        this._trfrm = this.GetComponent<Transform>();
+        this._shipSpd = 100.0f;
+        _trfrm.position = new Vector2(0, -217);
+        _health = 1;
 
+    }
     //Where the horizontal movement is done
     private  void _movement()
     {
@@ -87,13 +99,41 @@ public class ShipController : MonoBehaviour {
                      Mathf.Deg2Rad) * -_laserDistance);
 
         Instantiate(_laser, _laserPos, this._trfrm.rotation);
+        this.Laser_Shoot.Play();
     }
 
-    void OnTriggerEnter2D (Collider2D other)
+    void OnTriggerEnter2D (Collider2D crash)
     {
-        if (other.gameObject.CompareTag("Meteor"))
+        
+            
+            if (crash.gameObject.tag.Contains("Meteor"))
+            {
+                MeteorController _meteor = crash.gameObject.GetComponent("MeteorController") as MeteorController;
+                _health -= _meteor._dmg;
+                this.Explosion3.Play();
+                
+                
+            }
+            if (crash.gameObject.tag.Contains("Star"))
         {
-            Debug.Log("Meteor Hit");
+            this.Powerup.Play();
         }
+            if (_health <= 0)
+            {
+
+                if (explosion)
+                {
+                    Debug.Log("exploding");
+                    GameObject explode = ((Transform)Instantiate(explosion, this._trfrm.position, this._trfrm.rotation)).gameObject;
+                    explode.GetComponent<Renderer>().sortingLayerName = "Meteor";
+                    Destroy(explode, 2.0f);
+                    Debug.Log("exploded");
+                    //     RespawnMeteor();
+                }
+                _reset();
+                
+             }
+
+        
     }
 }

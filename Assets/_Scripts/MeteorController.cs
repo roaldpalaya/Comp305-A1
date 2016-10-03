@@ -3,10 +3,15 @@ using System.Collections;
 
 public class MeteorController : MonoBehaviour {
     private int _spd = 4;
-
+    public int _dmg = 1;
     private Transform _trfrm;
     public Transform explosion;
-    public int _health = 1;
+    public int _healthEnemy = 1;
+    public MeteorController _meteor1;
+    public MeteorController _meteor2;
+    public MeteorController _meteor3;
+    bool chkDead = false;
+    public AudioSource Explosion3;
     public int Spd
     {
         get
@@ -58,32 +63,45 @@ public class MeteorController : MonoBehaviour {
     //resets the background to starting point to scroll again
     private void _reset()
     {
-        this._spd = Random.Range(3,7);
+        this._spd = 5;
         this._trfrm.position = new Vector2(Random.Range(-270,270), 280);
 
     }
 
-    void OnTriggerEnter2D(Collider2D attack)
+    public void OnTriggerEnter2D(Collider2D attack)
     {
         Debug.Log("hit by" + attack.gameObject.tag);
 
-        if (attack.gameObject.tag.Contains("Weapon"))
+        if (attack.gameObject.tag.Contains("Weapon") )
         {
             LaserController _laser = attack.gameObject.GetComponent("LaserController") as LaserController;
-            _health -= _laser._dmg;
+            _healthEnemy -= _laser._dmg;
             Destroy(attack.gameObject);
+
         }
-        if (_health <= 0)
+        if (_healthEnemy <= 0)
         {
-            Destroy(this.gameObject);
+            this.Explosion3.Play();
             if (explosion) {
                 Debug.Log("exploding");
                 GameObject explode = ((Transform)Instantiate(explosion, this._trfrm.position, this._trfrm.rotation)).gameObject;
                 explode.GetComponent<Renderer>().sortingLayerName = "Meteor";
                 Destroy(explode, 2.0f);
                 Debug.Log("exploded");
-
+          //     RespawnMeteor();
             }
+            _reset();
+
         }
     }
+   /* void RespawnMeteor(){
+    this._trfrm.position = new Vector2(Random.Range(-270, 270), 280);
+    Instantiate(this.gameObject, this._trfrm.position, this._trfrm.rotation);
+        _reset();
+
+}*/
 }
+
+
+
+
