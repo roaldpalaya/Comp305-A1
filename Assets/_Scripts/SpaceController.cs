@@ -22,7 +22,7 @@ public class SpaceController : MonoBehaviour {
      // Use this for initialization
     void Start () {
         this._trfrm = this.GetComponent<Transform>();
-        this._spd = 2;
+        _reset();
 	}
 	
 	// Update is called once per frame
@@ -55,6 +55,7 @@ public class SpaceController : MonoBehaviour {
     //resets the background to starting point to scroll again
     private void _reset()
     {
+        this._spd = 2;
         this._trfrm.position = new Vector2(0f, 266f);
 
     }

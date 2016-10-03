@@ -88,4 +88,12 @@ public class ShipController : MonoBehaviour {
 
         Instantiate(_laser, _laserPos, this._trfrm.rotation);
     }
+
+    void OnTriggerEnter2D (Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Meteor"))
+        {
+            Debug.Log("Meteor Hit");
+        }
+    }
 }
