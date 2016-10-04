@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿/*TwinStick Assignment
+ * Roald Russel T. Palaya
+ * 300714999
+ * Date last Modified: 10/3/2016
+ */
+
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -8,18 +15,21 @@ public class GameController : MonoBehaviour {
     private int _lives;
     private int _score;
 
+    [Header("UI objects")]
     public Text LivesLbl;
     public Text ScoreLbl;
     public Text GameOverLbl;
     public Text FinalScoreLbl;
     public Button RestartButton;
 
+    [Header("Game Objects")]
     public GameObject meteor1;
     public GameObject meteor2;
     public GameObject meteor3;
-
     public GameObject ship;
     public GameObject star;
+
+
     public int Lives
     {
         get {
@@ -69,6 +79,7 @@ public class GameController : MonoBehaviour {
 	void Update () {
 	
 	}
+    //happens after player loses
     private void _endGame()
     {
         this.FinalScoreLbl.gameObject.SetActive(true);
@@ -85,7 +96,7 @@ public class GameController : MonoBehaviour {
         this.meteor3.gameObject.SetActive(false);
 
     }
-
+    //Enables to play the game again
     public void Restart()
     {
         SceneManager.LoadScene("GameScene");

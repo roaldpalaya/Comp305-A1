@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*TwinStick Assignment
+ * Roald Russel T. Palaya
+ * 300714999
+ * Date last Modified: 10/3/2016
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class StarController : MonoBehaviour {
@@ -64,13 +70,15 @@ public class StarController : MonoBehaviour {
         
 
     }
+
+    //Collision with ship
    public void OnTriggerEnter2D(Collider2D power)
     {
-        Debug.Log("Star hit by" + power.gameObject.tag);
+      
 
         if (power.gameObject.tag.Contains("Ship"))
         {
-            //ShipController _ship = power.gameObject.GetComponent("ShipController") as ShipController;
+            
             _health -= 1;
             
 

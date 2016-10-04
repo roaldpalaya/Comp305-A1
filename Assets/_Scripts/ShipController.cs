@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*TwinStick Assignment
+ * Roald Russel T. Palaya
+ * 300714999
+ * Date last Modified: 10/3/2016
+ */
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,9 +12,10 @@ using System.Collections.Generic;
 public class ShipController : MonoBehaviour {
 
     
-    private float _shipSpd = 100.0f;
+    private float _shipSpd;
+    public int _health = 1;
     private Transform _trfrm;
-    public int _health=1;
+
     public Transform _laser;
     public Transform explosion;
 
@@ -21,6 +28,7 @@ public class ShipController : MonoBehaviour {
 
     public List<KeyCode> shootBtn;
 
+    [Header("Audio Source ")]
     public AudioSource Explosion3;
     public AudioSource Powerup;
     public AudioSource Laser_Shoot;
@@ -39,8 +47,7 @@ public class ShipController : MonoBehaviour {
     // Current speed of the player
     public float curSpeed = 0.0f;
 
-    // The last movement done
-    //private Vector3 lastMovement = new Vector3();
+    
     // Use this for initialization
     void Start () {
         _reset();
@@ -61,6 +68,8 @@ public class ShipController : MonoBehaviour {
         }
         _nextShot -= Time.deltaTime;
     }
+
+    //Resets the ship to start position
     void _reset()
     {
         this._trfrm = this.GetComponent<Transform>();
@@ -69,7 +78,7 @@ public class ShipController : MonoBehaviour {
         _health = 1;
 
     }
-    //Where the horizontal movement is done
+    //Where the horizontal movement happens
     private  void _movement()
     {
         Vector2 _move = new Vector2();
@@ -89,7 +98,7 @@ public class ShipController : MonoBehaviour {
         this._trfrm.position = _pos;
         
     }
-
+    //Allows the weapon to be fired
     void _Shoot()
     {
 
@@ -104,6 +113,7 @@ public class ShipController : MonoBehaviour {
         this.Laser_Shoot.Play();
     }
 
+    //Collision with meteor and star
     void OnTriggerEnter2D (Collider2D crash)
     {
         
@@ -123,6 +133,7 @@ public class ShipController : MonoBehaviour {
         {
             this.Powerup.Play();
             this.gctrl.Lives += 1;
+            this.gctrl.Score += 20;
         }
             if (_health <= 0)
             {

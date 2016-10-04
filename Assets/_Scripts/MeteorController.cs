@@ -1,19 +1,26 @@
-﻿using UnityEngine;
+﻿/*TwinStick Assignment
+ * Roald Russel T. Palaya
+ * 300714999
+ * Date last Modified: 10/3/2016
+ */
+
+using UnityEngine;
 using System.Collections;
 
 public class MeteorController : MonoBehaviour {
     private int _spd;
-    public int _dmg = 1;
     private Transform _trfrm;
+
+    public int _dmg = 1;
     public Transform explosion;
     public int _healthEnemy = 1;
-    public MeteorController _meteor1;
-    public MeteorController _meteor2;
-    public MeteorController _meteor3;
 
+   
     public GameController gctrl;
-    //bool chkDead = false;
+    
+    [Header("Audio Source")]
     public AudioSource Explosion3;
+
     public int Spd
     {
         get
@@ -65,17 +72,18 @@ public class MeteorController : MonoBehaviour {
     //resets the background to starting point to scroll again
     private void _reset()
     {
-        this._spd = 7;
+        this._spd = 6;
         this._trfrm.position = new Vector2(Random.Range(-270,270), 280);
 
     }
-
+    //collision with weapon
     public void OnTriggerEnter2D(Collider2D attack)
     {
-        Debug.Log("Meteor hit by" + attack.gameObject.tag);
+        
 
         if (attack.gameObject.tag.Contains("Weapon") )
         {
+            this.gctrl.Score += 50;
             LaserController _laser = attack.gameObject.GetComponent("LaserController") as LaserController;
             _healthEnemy -= _laser._dmg;
             Destroy(attack.gameObject);
@@ -84,7 +92,7 @@ public class MeteorController : MonoBehaviour {
         if (_healthEnemy <= 0)
         {
             this.Explosion3.Play();
-            this.gctrl.Score += 50;
+            
             if (explosion) {
                 Debug.Log("exploding");
                 GameObject explode = ((Transform)Instantiate(explosion, this._trfrm.position, this._trfrm.rotation)).gameObject;
@@ -97,12 +105,7 @@ public class MeteorController : MonoBehaviour {
 
         }
     }
-   /* void RespawnMeteor(){
-    this._trfrm.position = new Vector2(Random.Range(-270, 270), 280);
-    Instantiate(this.gameObject, this._trfrm.position, this._trfrm.rotation);
-        _reset();
-
-}*/
+   
 }
 
 

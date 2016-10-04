@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/*TwinStick Assignment
+ * Roald Russel T. Palaya
+ * 300714999
+ * Date last Modified: 10/3/2016
+ */
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
